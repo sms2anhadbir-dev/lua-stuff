@@ -176,7 +176,7 @@ static NSString *ScriptsDir(void) {
 
 #pragma mark Actions
 
-- (void)setStatus:(NSString *)err {
+- (void)showStatus:(NSString *)err {
     if (err) {
         self.status.textColor = [UIColor colorWithRed:1 green:0.5 blue:0.5 alpha:1];
         self.status.text = [@"error: " stringByAppendingString:err];
@@ -188,7 +188,7 @@ static NSString *ScriptsDir(void) {
 
 - (void)runTapped {
     NSString *err = [[LuaEngine shared] run:self.codeView.text];
-    [self setStatus:err];
+    [self showStatus:err];
 }
 
 - (void)saveRunTapped {
