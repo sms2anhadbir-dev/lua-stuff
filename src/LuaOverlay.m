@@ -117,7 +117,7 @@ static NSString *ScriptsDir(void) {
     self.codeView.layer.cornerRadius = 8;
     self.codeView.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.codeView.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.codeView.text = @"inject.log('hello from ' .. inject.bundleid())";
+    self.codeView.text = @"print('hello from lua ' .. _VERSION)";
     [self.panel addSubview:self.codeView];
     y += 208;
 

@@ -1,7 +1,10 @@
--- Dropped at /var/mobile/Library/LuaInject/scripts/example.lua on device
-inject.log("Lua runtime is live inside " .. inject.bundleid())
+-- Plain Lua. No special API — just standard Lua 5.4.
+print("hello from " .. _VERSION)
 
--- Gate behaviour to a specific host app if you want:
-if inject.bundleid() == "com.example.targetapp" then
-    inject.log("hello from the target app")
+-- loadstring-style dynamic code (loadstring was renamed to load in 5.4):
+local f = load("return 2 + 2")
+print("2+2 =", f())
+
+for i = 1, 3 do
+    print("count", i)
 end
