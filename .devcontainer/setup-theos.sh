@@ -13,15 +13,23 @@ if [ ! -d "$THEOS" ]; then
   git clone --recursive https://github.com/theos/theos.git "$THEOS"
 fi
 
-# Install a Linux-hosted iOS toolchain (Swift/Clang cross toolchain)
+# Install a Linux-hosted iOS toolchain.
+# Use L1ghtmann's iOSToolchain (the currently maintained one): its ld64
+# understands modern SDK .tbd stubs (!tapi-tbd), which the old sbingner
+# clang-10 linker did not. A marker file records which toolchain is present
+# so we can replace an older one on rebuild.
 TOOLCHAIN_DIR="$THEOS/toolchain/linux/iphone"
-if [ ! -d "$TOOLCHAIN_DIR" ]; then
-  mkdir -p "$THEOS/toolchain/linux"
-  # Sam Bingner's Linux toolchain build
-  curl -L https://github.com/sbingner/llvm-project/releases/download/v10.0.0-1/linux-ios-arm64e-clang-toolchain.tar.lzma \
-    -o /tmp/toolchain.tar.lzma
-  tar --lzma -xf /tmp/toolchain.tar.lzma -C "$THEOS/toolchain/linux"
-  mv "$THEOS/toolchain/linux/ios-arm64e-clang-toolchain" "$TOOLCHAIN_DIR" || true
+MARKER="$THEOS/toolchain/.iostoolchain"
+if [ ! -f "$MARKER" ]; then
+  ARCH="$(uname -m)"   # x86_64 on Codespaces
+  rm -rf "$THEOS/toolchain/linux"
+  mkdir -p "$THEOS/toolchain"
+  curl -fL --retry 3 \
+    "https://github.com/L1ghtmann/llvm-project/releases/latest/download/iOSToolchain-$ARCH.tar.xz" \
+    -o /tmp/toolchain.tar.xz
+  tar -xf /tmp/toolchain.tar.xz -C "$THEOS/toolchain"
+  rm -f /tmp/toolchain.tar.xz
+  touch "$MARKER"
 fi
 
 # Install an iOS SDK. Must match the clang 10 toolchain above: newer SDKs
