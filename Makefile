@@ -1,5 +1,7 @@
 TARGET := iphone:clang:14.5:13.0
-ARCHS  := arm64 arm64e
+# arm64 only: the open-source Linux toolchain's arm64e ABI doesn't match
+# Apple's, so an arm64e slice can fail to load. arm64 runs everywhere.
+ARCHS  := arm64
 
 include $(THEOS)/makefiles/common.mk
 
