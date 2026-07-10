@@ -1,0 +1,7 @@
+.theos/
+obj/
+packages/
+*.dylib
+*.deb
+vendor/lua/
+.DS_Store

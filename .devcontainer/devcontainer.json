@@ -1,0 +1,12 @@
+{
+  "name": "Theos iOS Dev",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "postCreateCommand": "bash .devcontainer/setup-theos.sh",
+  "remoteEnv": {
+    "THEOS": "/home/vscode/theos",
+    "PATH": "${containerEnv:PATH}:/home/vscode/theos/bin"
+  }
+}
