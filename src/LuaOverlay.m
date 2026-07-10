@@ -117,7 +117,7 @@ static NSString *ScriptsDir(void) {
     self.codeView.layer.cornerRadius = 8;
     self.codeView.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.codeView.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.codeView.text = @"print('hello from lua ' .. _VERSION)";
+    self.codeView.text = @"print('running inside the game VM')";
     [self.panel addSubview:self.codeView];
     y += 208;
 

@@ -7,14 +7,16 @@ include $(THEOS)/makefiles/common.mk
 
 LIBRARY_NAME = LuaInject
 
-# Our injection glue + the vendored Lua interpreter sources
-LuaInject_FILES = $(wildcard src/*.m) $(wildcard vendor/lua/*.c)
-LuaInject_CFLAGS = -fobjc-arc -Ivendor/lua -DLUA_USE_IOS
+# Injection glue + UI + fishhook (for capturing the host game's Lua state).
+# We do NOT bundle our own Lua: we run inside the game's existing Luau VM,
+# so bundling Lua would only cause symbol clashes.
+LuaInject_FILES = $(wildcard src/*.m) $(wildcard vendor/fishhook/*.c)
+LuaInject_CFLAGS = -fobjc-arc -Ivendor/fishhook
 LuaInject_FRAMEWORKS = Foundation UIKit
 LuaInject_INSTALL_PATH = /usr/lib
 
 include $(THEOS_MAKE_PATH)/library.mk
 
-# Fetch Lua source if not present
+# Fetch fishhook source if not present
 before-all::
-	@bash scripts/fetch-lua.sh
+	@bash scripts/fetch-fishhook.sh
