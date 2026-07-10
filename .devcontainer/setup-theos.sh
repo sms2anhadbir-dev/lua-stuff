@@ -24,12 +24,18 @@ if [ ! -d "$TOOLCHAIN_DIR" ]; then
   mv "$THEOS/toolchain/linux/ios-arm64e-clang-toolchain" "$TOOLCHAIN_DIR" || true
 fi
 
-# Install an iOS SDK (patched for non-Mac hosts)
+# Install an iOS SDK. Must match the clang 10 toolchain above: newer SDKs
+# (16.x) use syntax clang 10 can't parse, so we pin an older, compatible one.
 SDK_DIR="$THEOS/sdks"
-if [ -z "$(ls -A "$SDK_DIR" 2>/dev/null | grep -i iphoneos || true)" ]; then
-  git clone --depth 1 https://github.com/theos/sdks.git /tmp/sdks
-  # keep a recent SDK only, to save space
-  cp -r /tmp/sdks/iPhoneOS16.5.sdk "$SDK_DIR/" 2>/dev/null || cp -r /tmp/sdks/*.sdk "$SDK_DIR/"
+WANT_SDK="iPhoneOS14.5.sdk"
+# Drop any previously installed too-new SDK so theos doesn't pick it.
+rm -rf "$SDK_DIR"/iPhoneOS15* "$SDK_DIR"/iPhoneOS16* "$SDK_DIR"/iPhoneOS17* 2>/dev/null || true
+if [ ! -d "$SDK_DIR/$WANT_SDK" ]; then
+  rm -rf /tmp/sdks
+  git clone --depth 1 --filter=blob:none --sparse https://github.com/theos/sdks.git /tmp/sdks
+  git -C /tmp/sdks sparse-checkout set "$WANT_SDK"
+  mkdir -p "$SDK_DIR"
+  cp -a "/tmp/sdks/$WANT_SDK" "$SDK_DIR/"
   rm -rf /tmp/sdks
 fi
 
