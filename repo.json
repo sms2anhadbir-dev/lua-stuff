@@ -1,0 +1,31 @@
+{
+  "META": {
+    "repoName": "Safe Example Repo",
+    "repoIcon": "https://example.com/favicon.png"
+  },
+  "Games": [
+    {
+      "name": "Roblox Patched",
+      "version": "1.0.0",
+      "down": "https://<your-username>.github.io/<your-repo>/roblox-patched.ipa",
+      "category": "Games",
+      "description": "Patched Roblox IPA build hosted as a GitHub Pages artifact.",
+      "bundleID": "com.roblox.roblox",
+      "appstore": "com.roblox.roblox"
+    }
+  ],
+  "Tweaked": [
+    {
+      "name": "Example Tweaked App",
+      "version": "1.2.3",
+      "down": "https://example.com/apps/example-tweaked.ipa",
+      "category": "Tweaked Apps",
+      "description": "Placeholder entry for a legitimate tweaked app.",
+      "bundleID": "com.example.tweaked",
+      "appstore": "com.example.tweaked"
+    }
+  ],
+  "Jailbreaks": [],
+  "Emulators": [],
+  "Other": []
+}

@@ -1,0 +1,35 @@
+name: Publish release assets
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create site folder
+        run: mkdir -p site
+
+      - name: Copy build artifact
+        run: cp .build/roblox-patched.ipa site/roblox-patched.ipa
+
+      - name: Copy manifest
+        run: cp repo.json site/repo.json
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

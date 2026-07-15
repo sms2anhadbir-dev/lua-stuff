@@ -19,7 +19,7 @@ Files:
   list, hosted in a passthrough `UIWindow` so the app underneath stays usable.
 - `src/LuaEngine.m` — a persistent Lua state + the `inject.*` native API.
 - `vendor/lua/` — the vanilla Lua interpreter source (fetched at build time).
-- Output: `LuaInject.dylib` in `.theos/obj/`.
+- Output: `libLuaInject.dylib` in `.theos/obj/`.
 
 Saved scripts live in `/var/mobile/Library/LuaInject/scripts/`, falling back
 to the app's Documents dir if that path isn't writable.
@@ -31,7 +31,7 @@ to the app's Documents dir if that path isn't writable.
    ```bash
    make
    ```
-   The dylib lands in `.theos/obj/LuaInject.dylib`.
+   The dylib lands in `.theos/obj/libLuaInject.dylib`.
 
 ## Loading it into a process
 This is the part that depends on *your* environment and authorization:
@@ -48,3 +48,9 @@ for). Don't use this against apps or devices you don't control.
 ## Extending the native API
 Add C functions to `kInjectLib` in `src/LuaEngine.m`. Anything you expose
 there becomes callable from Lua as `inject.<name>(...)`.
+
+## Repo manifest
+A sample repo manifest is available in [repo.json](repo.json). It follows the requested top-level structure with `META`, `Games`, `Tweaked`, `Jailbreaks`, `Emulators`, and `Other` sections.
+
+## GitHub Pages publishing
+The workflow in [.github/workflows/deploy-release.yml](.github/workflows/deploy-release.yml) publishes the patched IPA and manifest as GitHub Pages assets. Replace the placeholder owner/repo URL in [repo.json](repo.json) with your actual GitHub username and repository name before running the workflow.
