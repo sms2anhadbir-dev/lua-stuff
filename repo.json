@@ -7,9 +7,9 @@
     {
       "name": "Roblox Patched",
       "version": "1.0.0",
-      "down": "https://<your-username>.github.io/<your-repo>/roblox-patched.ipa",
+      "down": "https://project-import.netlify.app/roblox-patched.ipa",
       "category": "Games",
-      "description": "Patched Roblox IPA build hosted as a GitHub Pages artifact.",
+      "description": "Roblox executor - completely free and no ads or key",
       "bundleID": "com.roblox.roblox",
       "appstore": "com.roblox.roblox"
     }
